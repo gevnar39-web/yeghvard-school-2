@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Երկրաչափություն</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f3558'/%3E%3Cpath d='M7 25V9l18 16z' fill='%237fd1a8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800&family=Noto+Sans+Armenian:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="theorem">
+<div id="siteHeader"></div>
+<main id="top">
+<section class="sec page-sec">
+  <div class="wrap">
+    <h2 class="h" data-i18n="thm_title"></h2>
+    <p class="sub" data-i18n="thm_sub"></p>
+    <div class="statement card">
+      <p data-i18n="thm_main"></p>
+      <div class="big-f">a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup></div>
+      <p class="muted" data-i18n="thm_how"></p>
+    </div>
+
+    <h3 class="h3" data-i18n="ex_title"></h3>
+    <p class="sub" data-i18n="ex_sub"></p>
+    <div class="explorer">
+      <div class="card svg-card"><svg id="exSvg" viewBox="0 0 520 520" role="img" aria-label="Right triangle with squares on its sides"></svg></div>
+      <div class="card ctl">
+        <label class="sl"><span><span data-i18n="sl_a"></span>: <b id="aVal">3</b></span><input type="range" id="aR" min="1" max="15" step="1" value="3"></label>
+        <label class="sl"><span><span data-i18n="sl_b"></span>: <b id="bVal">4</b></span><input type="range" id="bR" min="1" max="15" step="1" value="4"></label>
+        <div class="eq" id="exEq"></div>
+        <p class="note" id="exNote"></p>
+        <p class="lab" data-i18n="presets"></p>
+        <div class="chips" id="presets"></div>
+        <div class="legend">
+          <span><i style="background:#1f5f8b"></i><em data-i18n="leg_a"></em></span>
+          <span><i style="background:#2e7d5b"></i><em data-i18n="leg_b"></em></span>
+          <span><i style="background:#d99a2b"></i><em data-i18n="hyp_c"></em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<div id="siteFooter"></div>
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

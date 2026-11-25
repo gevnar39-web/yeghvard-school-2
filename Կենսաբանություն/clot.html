@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Կենսաբանություն</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 29C5 20 3 14 3 10a7 7 0 0 1 13-3.5A7 7 0 0 1 29 10c0 4-2 10-13 19z' fill='%23d7263d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800&family=Noto+Sans+Armenian:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="clot">
+<div id="siteHeader"></div>
+<main id="top">
+<section class="pagehead"><div class="wrap"><h1 data-i18n="nav_clot"></h1></div></section>
+<section class="sec">
+  <div class="wrap">
+    <h2 class="h" data-i18n="cl_title"></h2>
+    <p class="sub" data-i18n="cl_sub"></p>
+    <div class="clot-board">
+      <div class="clot-fig">
+        <svg id="clotSvg" viewBox="0 0 600 270" data-step="1" role="img" aria-label="clot">
+          <defs><clipPath id="lumen"><rect x="0" y="86" width="600" height="104"/></clipPath></defs>
+          <!-- skin -->
+          <path d="M0 0H268L276 62H324L332 0H600V70H0Z" fill="#f6d3b3"/>
+          <path d="M0 70H600" stroke="#e5b58f" stroke-width="2"/>
+          <!-- vessel wall -->
+          <path d="M0 78H270V86H0Z M330 78H600V86H330Z" fill="#e2808f"/>
+          <rect x="0" y="190" width="600" height="10" fill="#e2808f"/>
+          <rect x="0" y="86" width="600" height="104" fill="#ffc9d0"/>
+          <!-- flowing red cells -->
+          <g clip-path="url(#lumen)">
+            <g class="rc" style="animation-delay:0s"><circle cx="0" cy="118" r="11" fill="#d7263d"/><circle cx="0" cy="118" r="4" fill="#9e1226" opacity=".5"/></g>
+            <g class="rc" style="animation-delay:-2.2s"><circle cx="0" cy="160" r="11" fill="#d7263d"/><circle cx="0" cy="160" r="4" fill="#9e1226" opacity=".5"/></g>
+            <g class="rc" style="animation-delay:-4.4s"><circle cx="0" cy="138" r="11" fill="#d7263d"/><circle cx="0" cy="138" r="4" fill="#9e1226" opacity=".5"/></g>
+            <g class="rc" style="animation-delay:-6.6s"><circle cx="0" cy="104" r="11" fill="#d7263d"/><circle cx="0" cy="104" r="4" fill="#9e1226" opacity=".5"/></g>
+            <g class="rc" style="animation-delay:-8.8s"><circle cx="0" cy="172" r="11" fill="#d7263d"/><circle cx="0" cy="172" r="4" fill="#9e1226" opacity=".5"/></g>
+          </g>
+          <!-- leak -->
+          <g class="g-leak"><path d="M272 90 C268 70 262 40 268 18 C276 -6 324 -6 332 18 C338 40 332 70 328 90Z" fill="#d7263d" opacity=".92"/>
+            <circle cx="300" cy="30" r="9" fill="#9e1226" opacity=".4"/><circle cx="288" cy="52" r="7" fill="#9e1226" opacity=".35"/></g>
+          <!-- platelets -->
+          <g class="g-plt" fill="#7ea6ff" stroke="#fff" stroke-width="2">
+            <circle cx="278" cy="84" r="8"/><circle cx="292" cy="76" r="8"/><circle cx="306" cy="84" r="8"/><circle cx="320" cy="76" r="8"/>
+            <circle cx="286" cy="64" r="7"/><circle cx="300" cy="58" r="7"/><circle cx="314" cy="64" r="7"/><circle cx="296" cy="96" r="7"/><circle cx="312" cy="98" r="7"/><circle cx="282" cy="100" r="7"/>
+          </g>
+          <!-- fibrin -->
+          <g class="g-fib" stroke="#f2b632" stroke-width="2.2" stroke-linecap="round" fill="none">
+            <path d="M268 56L332 98M268 76L332 62M270 98L330 56M284 52L318 104M300 50L300 106M272 66L328 84M276 104L324 54"/>
+          </g>
+          <!-- clot + scab -->
+          <g class="g-clot"><path d="M268 96C262 70 262 50 272 40C290 30 312 30 328 40C338 50 338 70 332 96Z" fill="#8e1228" opacity=".9"/>
+            <circle cx="284" cy="70" r="9" fill="#d7263d"/><circle cx="304" cy="58" r="9" fill="#d7263d"/><circle cx="318" cy="78" r="9" fill="#d7263d"/><circle cx="296" cy="88" r="8" fill="#d7263d"/>
+            <path d="M266 44C280 22 320 22 334 44C320 34 280 34 266 44Z" fill="#5b1220"/></g>
+        </svg>
+        <ul class="clot-legend">
+          <li><i style="background:#f6d3b3"></i><span data-i18n="cl_lg1"></span></li>
+          <li><i style="background:#d7263d"></i><span data-i18n="cl_lg2"></span></li>
+          <li><i style="background:#7ea6ff"></i><span data-i18n="cl_lg3"></span></li>
+          <li><i style="background:#f2b632"></i><span data-i18n="cl_lg4"></span></li>
+        </ul>
+      </div>
+      <div class="clot-info card">
+        <div class="clot-dots" id="clotDots"></div>
+        <h3 id="clotTitle"></h3>
+        <p id="clotText"></p>
+        <div class="clot-btns">
+          <button class="btn btn-ghost-d" id="clotPrev" data-i18n="cl_prev"></button>
+          <button class="btn btn-solid" id="clotNext" data-i18n="cl_next"></button>
+          <button class="btn btn-ghost-d" id="clotPlay"></button>
+        </div>
+      </div>
+    </div>
+    <div class="grid4 mt2">
+      <div class="ccard" style="--c:#2358d6"><h4 style="color:#2358d6" data-i18n="cl_f1"></h4><p data-i18n="cl_f1d"></p></div>
+      <div class="ccard" style="--c:#2f9e6b"><h4 style="color:#2f9e6b" data-i18n="cl_f2"></h4><p data-i18n="cl_f2d"></p></div>
+      <div class="ccard" style="--c:#7c5cd6"><h4 style="color:#7c5cd6" data-i18n="cl_f3"></h4><p data-i18n="cl_f3d"></p></div>
+    </div>
+    <div class="callout"><h4 data-i18n="cl_aid_t"></h4><p data-i18n="cl_aid_d"></p></div>
+  </div>
+</section>
+</main>
+<div id="siteFooter"></div>
+<script src="js/data.js"></script>
+<script src="js/data-extra.js"></script>
+<script src="js/app.js"></script>
+<script src="js/extra.js"></script>
+</body>
+</html>

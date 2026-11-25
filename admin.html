@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+Armenian:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/school.css">
+</head>
+<body>
+<main class="wrap narrow">
+  <form class="card pw" id="pwForm" autocomplete="off">
+    <h2 class="h">Admin</h2>
+    <label for="pw">Password</label>
+    <input id="pw" type="password" inputmode="numeric" autocomplete="off" required>
+    <button class="btn btn-solid" type="submit" id="pwBtn">OK</button>
+    <p class="result" id="pwRes" aria-live="polite"></p>
+  </form>
+  <section id="list" hidden>
+    <h2 class="h" id="count" style="margin-top:34px"></h2>
+    <div id="letters"></div>
+  </section>
+</main>
+<script src="shared/config.js"></script>
+<script>
+(function () {
+  var cfg = window.SCHOOL_CFG || {}, $ = function (s) { return document.querySelector(s); };
+  $('#pwForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var res = $('#pwRes'), btn = $('#pwBtn');
+    if (!cfg.supabaseUrl || !cfg.anonKey) { res.className = 'result warn'; res.textContent = 'Backend is not configured.'; return; }
+    btn.disabled = true; res.className = 'result'; res.textContent = '…';
+    fetch(cfg.supabaseUrl + '/rest/v1/rpc/get_letters', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey },
+      body: JSON.stringify({ pw: $('#pw').value }), referrerPolicy: 'no-referrer', credentials: 'omit'
+    }).then(function (r) {
+      if (!r.ok) throw new Error('bad');
+      return r.json();
+    }).then(function (rows) {
+      $('#pwForm').hidden = true; $('#list').hidden = false;
+      $('#count').textContent = rows.length + ' ✉';
+      var box = $('#letters'); box.innerHTML = '';
+      rows.forEach(function (l) {
+        var d = document.createElement('div'); d.className = 'card lt';
+        var w = document.createElement('div'); w.className = 'when'; w.textContent = new Date(l.created_at).toLocaleString();
+        var t = document.createElement('div'); t.className = 'txt'; t.textContent = l.body;
+        d.appendChild(w); d.appendChild(t); box.appendChild(d);
+      });
+    }).catch(function () { res.className = 'result warn'; res.textContent = 'Wrong password'; })
+      .then(function () { btn.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

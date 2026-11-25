@@ -1,111 +1,112 @@
 <!doctype html>
-<html lang="ru">
+<html lang="hy">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Նախագծային աշխատանք</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 29C5 20 3 14 3 10a7 7 0 0 1 13-3.5A7 7 0 0 1 29 10c0 4-2 10-13 19z' fill='%23d7263d'/%3E%3C/svg%3E">
+<title>Եղվարդի N 2 հիմնական դպրոց</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f3558'/%3E%3Cpath d='M16 6l11 7v2H5v-2zM8 17h3v8H8zm6 0h4v8h-4zm7 0h3v8h-3z' fill='%237fd1a8'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800&family=Noto+Sans+Armenian:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="shared/school.css">
 </head>
-<body data-page="home">
-<div id="siteHeader"></div>
+<body>
+<header class="top">
+  <a class="brand" href="#top"><svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path d="M16 4l12 7v2H4v-2zM7 15h4v10H7zm7 0h4v10h-4zm7 0h4v10h-4z" fill="#2e7d5b"/></svg><b data-i18n="brand"></b></a>
+  <nav class="nav">
+    <a href="#about" data-i18n="n_about"></a>
+    <a href="#where" data-i18n="n_where"></a>
+    <a href="#projects" data-i18n="n_proj"></a>
+    <a href="#letter" data-i18n="n_letter"></a>
+  </nav>
+  <div class="lang" id="lang">
+    <button data-lang="hy" aria-pressed="true">HY</button><button data-lang="ru" aria-pressed="false">RU</button><button data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
 <main id="top">
 <section class="hero">
-  <i class="cell c1"></i><i class="cell c2"></i><i class="cell c3"></i><i class="cell c4"></i><i class="cell c5"></i>
   <div class="wrap hero-grid">
-    <div class="hero-card">
-      <p class="kicker" data-i18n="hero_kicker"></p>
-      <h1 data-i18n="hero_title"></h1>
-      <p class="lead" data-i18n="hero_sub"></p>
+    <div class="hero-text">
+      <p class="kicker" data-i18n="kicker"></p>
+      <h1 data-i18n="title"></h1>
+      <p class="lead" data-i18n="lead"></p>
       <div class="cta">
-        <a class="btn btn-white" href="#explorer" data-i18n="hero_cta"></a>
-        <a class="btn btn-ghost" href="find.html" data-i18n="hero_cta2"></a>
+        <a class="btn btn-white" href="#projects" data-i18n="cta1"></a>
+        <a class="btn btn-ghost" href="#letter" data-i18n="cta2"></a>
       </div>
     </div>
-    <ul class="stats">
-      <li><b>5 L</b><span data-i18n="stat1"></span></li>
-      <li><b>100&nbsp;000</b><span data-i18n="stat2"></span></li>
-      <li><b>7&nbsp;000 L</b><span data-i18n="stat3"></span></li>
+    <figure class="photo">
+      <img src="shared/img/school.jpg" alt="" onerror="this.onerror=null;this.src='shared/img/yeghvard.jpg';document.getElementById('photoCap').hidden=false">
+      <figcaption id="photoCap" hidden data-i18n="photo_cap"></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="about" class="sec">
+  <div class="wrap">
+    <h2 class="h" data-i18n="about_t"></h2>
+    <p class="sub" data-i18n="about_x"></p>
+    <ul class="facts">
+      <li><b>1962</b><span data-i18n="f_year"></span></li>
+      <li><b>539</b><span data-i18n="f_pupils"></span></li>
+      <li><b>43</b><span data-i18n="f_teachers"></span></li>
+      <li><b>24</b><span data-i18n="f_rooms"></span></li>
+      <li><b>3</b><span data-i18n="f_labs"></span></li>
+      <li><b>2</b><span data-i18n="f_gyms"></span></li>
     </ul>
+    <p class="note" data-i18n="src_note"></p>
   </div>
-  <svg class="ecg" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40h300l20-6 14 6h50l14-0 12-34 18 66 16-44 14 12h60l20-8 16 8h140l14-0 12-34 18 66 16-44 14 12h260l20-6 14 6h200" /></svg>
 </section>
-<section id="explorer" class="sec">
-  <div class="wrap">
-    <h2 class="h" data-i18n="ex_title"></h2>
-    <p class="sub" data-i18n="ex_sub"></p>
 
-    <div class="viewer">
-      <div class="stage-col">
-        <div class="stage" id="stageWrap">
-          <canvas id="stage" aria-label="3D circulatory system"></canvas>
-          <div class="no-gl" id="noGL" hidden><span data-i18n="no_gl"></span></div>
-          <div class="stage-top">
-            <div class="seg" id="modeSeg">
-              <button data-mode="body" aria-pressed="true" data-i18n="mode_body"></button>
-              <button data-mode="heart" aria-pressed="false" data-i18n="mode_heart"></button>
-            </div>
-            <div class="zoom">
-              <button id="zIn" aria-label="Zoom in">+</button>
-              <button id="zOut" aria-label="Zoom out">−</button>
-              <button id="zReset" class="rst" data-i18n="reset"></button>
-            </div>
-          </div>
-          <div class="legend">
-            <span><i class="dot ox"></i><em data-i18n="legend_ox"></em></span>
-            <span><i class="dot deox"></i><em data-i18n="legend_deox"></em></span>
-          </div>
-          <div class="tip" id="tip" hidden></div>
-        </div>
-        <div class="controls">
-          <label class="tog"><input type="checkbox" data-layer="arteries" checked><span data-i18n="lay_art"></span></label>
-          <label class="tog"><input type="checkbox" data-layer="veins" checked><span data-i18n="lay_vein"></span></label>
-          <label class="tog"><input type="checkbox" data-layer="organs" checked><span data-i18n="lay_org"></span></label>
-          <label class="tog"><input type="checkbox" data-layer="outline" checked><span data-i18n="lay_skin"></span></label>
-          <label class="tog"><input type="checkbox" data-layer="flow" checked><span data-i18n="lay_flow"></span></label>
-          <label class="tog"><input type="checkbox" id="autoRot" checked><span data-i18n="lay_auto"></span></label>
-          <label class="bpm"><span><span data-i18n="bpm"></span>: <b id="bpmVal">72</b> <span data-i18n="unit_bpm"></span></span>
-            <input type="range" id="bpm" min="40" max="160" value="72"></label>
-        </div>
-      </div>
-
-      <aside class="side">
-        <div class="info" id="info"></div>
-        <div class="parts">
-          <h3 data-i18n="parts_title"></h3>
-          <div id="partsList"></div>
-        </div>
-      </aside>
+<section id="where" class="sec alt">
+  <div class="wrap two">
+    <div>
+      <h2 class="h" data-i18n="where_t"></h2>
+      <dl class="info">
+        <div><dt data-i18n="l_addr"></dt><dd data-i18n="v_addr"></dd></div>
+        <div><dt data-i18n="l_phone"></dt><dd><a href="tel:+37422421384">(0224) 2-13-84</a>, <a href="tel:+37498033176">098 03 31 76</a></dd></div>
+        <div><dt data-i18n="l_mail"></dt><dd><a href="mailto:yeghvard2@schools.am">yeghvard2@schools.am</a></dd></div>
+        <div><dt data-i18n="l_dir"></dt><dd data-i18n="v_dir"></dd></div>
+        <div><dt data-i18n="l_type"></dt><dd data-i18n="v_type"></dd></div>
+      </dl>
+      <a class="btn btn-solid" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Yeghvard+Safaryan+88" data-i18n="map_btn"></a>
+    </div>
+    <div class="card about-town">
+      <h3 data-i18n="town_t"></h3>
+      <p data-i18n="town_x"></p>
     </div>
   </div>
 </section>
-<section id="assistant" class="sec alt">
+
+<section id="projects" class="sec">
   <div class="wrap">
-    <h2 class="h" data-i18n="ai_title"></h2>
-    <p class="sub" data-i18n="ai_sub"></p>
-    <div class="chat card">
-      <div class="chat-log" id="chatLog" aria-live="polite"></div>
-      <div class="chat-chips" id="chatChips"></div>
-      <form id="chatForm" class="chat-form" autocomplete="off">
-        <input id="chatInput" type="text" maxlength="300" data-i18n-ph="ai_ph" aria-label="Question">
-        <button type="submit" class="btn btn-solid" data-i18n="ai_send"></button>
-      </form>
-      <p class="note" data-i18n="ai_note"></p>
+    <h2 class="h" data-i18n="proj_t"></h2>
+    <p class="sub" data-i18n="proj_x"></p>
+    <div class="grid3">
+      <a class="card proj" href="Աշխարհագրություն/index.html"><span class="ic">🌍</span><h3 data-i18n="p_geo"></h3><p data-i18n="p_geo_x"></p></a>
+      <a class="card proj" href="Կենսաբանություն/index.html"><span class="ic">🫀</span><h3 data-i18n="p_bio"></h3><p data-i18n="p_bio_x"></p></a>
+      <a class="card proj" href="Երկրաչափություն/index.html"><span class="ic">📐</span><h3 data-i18n="p_geom"></h3><p data-i18n="p_geom_x"></p></a>
     </div>
+  </div>
+</section>
+
+<section id="letter" class="sec alt">
+  <div class="wrap narrow">
+    <h2 class="h" data-i18n="let_t"></h2>
+    <p class="sub" data-i18n="let_x"></p>
+    <form class="card letter" id="letterForm" autocomplete="off">
+      <textarea id="letterText" rows="6" maxlength="2000" required data-i18n-ph="let_ph" aria-label="Letter"></textarea>
+      <div class="let-row"><span class="note" id="letterCount">0 / 2000</span><button class="btn btn-solid" type="submit" id="letterBtn" data-i18n="let_send"></button></div>
+      <p class="result" id="letterRes" aria-live="polite"></p>
+      <p class="note" data-i18n="let_priv"></p>
+    </form>
   </div>
 </section>
 </main>
-<div id="siteFooter"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.150.1/three.min.js"></script>
-<script src="js/data.js"></script>
-<script src="js/data-extra.js"></script>
-<script src="js/viewer.js"></script>
-<script src="js/app.js"></script>
-<script src="js/config.js"></script>
-<script src="js/config.local.js"></script>
-<script src="js/chat.js"></script>
+
+<footer class="foot"><div class="wrap"><b data-i18n="brand"></b> · <span data-i18n="foot"></span></div></footer>
+<script src="shared/config.js"></script>
+<script src="shared/school.js"></script>
 </body>
 </html>

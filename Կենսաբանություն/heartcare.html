@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Կենսաբանություն</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 29C5 20 3 14 3 10a7 7 0 0 1 13-3.5A7 7 0 0 1 29 10c0 4-2 10-13 19z' fill='%23d7263d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800&family=Noto+Sans+Armenian:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="habits">
+<div id="siteHeader"></div>
+<main id="top">
+<section class="pagehead"><div class="wrap"><h1 data-i18n="nav_habits"></h1></div></section>
+<section class="sec">
+  <div class="wrap">
+    <h2 class="h" data-i18n="hc_title"></h2>
+    <p class="sub" data-i18n="hc_sub"></p>
+    <div class="hc-board">
+      <div class="hc-heart card">
+        <svg viewBox="0 0 200 180" id="hcHeart" aria-hidden="true"><defs><radialGradient id="hg" cx=".35" cy=".3" r=".9"><stop offset="0" id="hg1" stop-color="#ff8a9a"/><stop offset="1" id="hg2" stop-color="#c4152e"/></radialGradient></defs>
+          <path d="M100 168C28 112 10 78 10 52a42 42 0 0 1 90-18A42 42 0 0 1 190 52c0 26-18 60-90 116z" fill="url(#hg)"/>
+          <path d="M20 92h46l12-26 18 52 14-34 10 8h60" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/></svg>
+        <div class="hc-score"><span data-i18n="hc_score"></span>: <b id="hcCount">0</b>/8</div>
+        <div class="fbar"><i id="hcBar" style="width:0"></i></div>
+        <p id="hcMsg"></p>
+      </div>
+      <div class="hc-list" id="hcList"></div>
+    </div>
+    <div class="callout"><h4 data-i18n="hc_alert_t"></h4><p data-i18n="hc_alert_d"></p></div>
+  </div>
+</section>
+</main>
+<div id="siteFooter"></div>
+<script src="js/data.js"></script>
+<script src="js/data-extra.js"></script>
+<script src="js/app.js"></script>
+<script src="js/extra.js"></script>
+</body>
+</html>

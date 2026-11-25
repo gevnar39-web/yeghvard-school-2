@@ -1,4 +1,3 @@
-js/config.local.js
+node_modules/
 .claude/
-*.pcm
-Thumbs.db
+*.log

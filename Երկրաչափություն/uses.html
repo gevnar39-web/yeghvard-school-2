@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Երկրաչափություն</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f3558'/%3E%3Cpath d='M7 25V9l18 16z' fill='%237fd1a8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800&family=Noto+Sans+Armenian:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="uses">
+<div id="siteHeader"></div>
+<main id="top">
+<section class="sec page-sec">
+  <div class="wrap">
+    <h2 class="h" data-i18n="use_title"></h2>
+    <div class="grid4">
+      <article class="card use"><span class="ic">🪜</span><h3 data-i18n="use1_t"></h3><p data-i18n="use1_x"></p></article>
+      <article class="card use"><span class="ic">📐</span><h3 data-i18n="use2_t"></h3><p data-i18n="use2_x"></p></article>
+      <article class="card use"><span class="ic">📦</span><h3 data-i18n="use3_t"></h3><p data-i18n="use3_x"></p></article>
+      <article class="card use"><span class="ic">🏗️</span><h3 data-i18n="use4_t"></h3><p data-i18n="use4_x"></p></article>
+    </div>
+    <div class="card calc">
+      <h3 class="h3 first" data-i18n="calc_title"></h3>
+      <p class="note" data-i18n="calc_sub"></p>
+      <div class="trio">
+        <label>a<input type="number" id="ka" min="0" step="any" placeholder="a"></label>
+        <label>b<input type="number" id="kb" min="0" step="any" placeholder="b"></label>
+        <label>c<input type="number" id="kc" min="0" step="any" placeholder="c"></label>
+      </div>
+      <button class="btn btn-solid" id="kBtn" data-i18n="calc_btn"></button>
+      <p class="result" id="kRes" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+</main>
+<div id="siteFooter"></div>
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

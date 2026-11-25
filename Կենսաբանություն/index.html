@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Կենսաբանություն</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 29C5 20 3 14 3 10a7 7 0 0 1 13-3.5A7 7 0 0 1 29 10c0 4-2 10-13 19z' fill='%23d7263d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800&family=Noto+Sans+Armenian:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+<div id="siteHeader"></div>
+<main id="top">
+<section class="hero">
+  <i class="cell c1"></i><i class="cell c2"></i><i class="cell c3"></i><i class="cell c4"></i><i class="cell c5"></i>
+  <div class="wrap hero-grid">
+    <div class="hero-card">
+      <p class="kicker" data-i18n="hero_kicker"></p>
+      <h1 data-i18n="hero_title"></h1>
+      <p class="lead" data-i18n="hero_sub"></p>
+      <div class="cta">
+        <a class="btn btn-white" href="#explorer" data-i18n="hero_cta"></a>
+        <a class="btn btn-ghost" href="find.html" data-i18n="hero_cta2"></a>
+      </div>
+    </div>
+    <ul class="stats">
+      <li><b>5 L</b><span data-i18n="stat1"></span></li>
+      <li><b>100&nbsp;000</b><span data-i18n="stat2"></span></li>
+      <li><b>7&nbsp;000 L</b><span data-i18n="stat3"></span></li>
+    </ul>
+  </div>
+  <svg class="ecg" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40h300l20-6 14 6h50l14-0 12-34 18 66 16-44 14 12h60l20-8 16 8h140l14-0 12-34 18 66 16-44 14 12h260l20-6 14 6h200" /></svg>
+</section>
+<section id="explorer" class="sec">
+  <div class="wrap">
+    <h2 class="h" data-i18n="ex_title"></h2>
+    <p class="sub" data-i18n="ex_sub"></p>
+
+    <div class="viewer">
+      <div class="stage-col">
+        <div class="stage" id="stageWrap">
+          <canvas id="stage" aria-label="3D circulatory system"></canvas>
+          <div class="no-gl" id="noGL" hidden><span data-i18n="no_gl"></span></div>
+          <div class="stage-top">
+            <div class="seg" id="modeSeg">
+              <button data-mode="body" aria-pressed="true" data-i18n="mode_body"></button>
+              <button data-mode="heart" aria-pressed="false" data-i18n="mode_heart"></button>
+            </div>
+            <div class="zoom">
+              <button id="zIn" aria-label="Zoom in">+</button>
+              <button id="zOut" aria-label="Zoom out">−</button>
+              <button id="zReset" class="rst" data-i18n="reset"></button>
+            </div>
+          </div>
+          <div class="legend">
+            <span><i class="dot ox"></i><em data-i18n="legend_ox"></em></span>
+            <span><i class="dot deox"></i><em data-i18n="legend_deox"></em></span>
+          </div>
+          <div class="tip" id="tip" hidden></div>
+        </div>
+        <div class="controls">
+          <label class="tog"><input type="checkbox" data-layer="arteries" checked><span data-i18n="lay_art"></span></label>
+          <label class="tog"><input type="checkbox" data-layer="veins" checked><span data-i18n="lay_vein"></span></label>
+          <label class="tog"><input type="checkbox" data-layer="organs" checked><span data-i18n="lay_org"></span></label>
+          <label class="tog"><input type="checkbox" data-layer="outline" checked><span data-i18n="lay_skin"></span></label>
+          <label class="tog"><input type="checkbox" data-layer="flow" checked><span data-i18n="lay_flow"></span></label>
+          <label class="tog"><input type="checkbox" id="autoRot" checked><span data-i18n="lay_auto"></span></label>
+          <label class="bpm"><span><span data-i18n="bpm"></span>: <b id="bpmVal">72</b> <span data-i18n="unit_bpm"></span></span>
+            <input type="range" id="bpm" min="40" max="160" value="72"></label>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="info" id="info"></div>
+        <div class="parts">
+          <h3 data-i18n="parts_title"></h3>
+          <div id="partsList"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<section id="assistant" class="sec alt">
+  <div class="wrap">
+    <h2 class="h" data-i18n="ai_title"></h2>
+    <p class="sub" data-i18n="ai_sub"></p>
+    <div class="chat card">
+      <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      <div class="chat-chips" id="chatChips"></div>
+      <form id="chatForm" class="chat-form" autocomplete="off">
+        <input id="chatInput" type="text" maxlength="300" data-i18n-ph="ai_ph" aria-label="Question">
+        <button type="button" class="mic" id="chatMic" aria-label="Ask by voice" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button type="submit" class="btn btn-solid" data-i18n="ai_send"></button>
+      </form>
+      <p class="note" data-i18n="ai_note"></p>
+    </div>
+  </div>
+</section>
+</main>
+<div id="siteFooter"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.150.1/three.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/data-extra.js"></script>
+<script src="js/viewer.js"></script>
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/chat.js"></script>
+</body>
+</html>
