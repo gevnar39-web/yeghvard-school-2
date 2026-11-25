@@ -7,6 +7,17 @@
 <title>Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+Armenian:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared/school.css">
+<style>
+.tabs{display:flex;gap:8px;margin:26px 0 16px}
+.tabs button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:8px 18px;font-weight:700}
+.tabs button[aria-pressed=true]{background:var(--grad);color:#fff;border-color:transparent}
+.add textarea{width:100%;font:inherit;padding:12px;border:1.5px solid var(--line);border-radius:12px;min-height:90px;resize:vertical;margin:10px 0}
+.add .prev{display:block;max-width:260px;border-radius:12px;margin:10px 0}
+.srow{display:flex;gap:14px;align-items:flex-start}
+.srow img{width:120px;height:90px;object-fit:cover;border-radius:10px;flex:none}
+.srow .d{flex:1;white-space:pre-wrap;word-wrap:break-word}
+.btn-del{border:1.5px solid #e0b4ad;background:#fff;color:#a8321f;border-radius:99px;padding:6px 14px;font-weight:700}
+</style>
 </head>
 <body>
 <main class="wrap narrow">
@@ -17,38 +28,123 @@
     <button class="btn btn-solid" type="submit" id="pwBtn">OK</button>
     <p class="result" id="pwRes" aria-live="polite"></p>
   </form>
-  <section id="list" hidden>
-    <h2 class="h" id="count" style="margin-top:34px"></h2>
-    <div id="letters"></div>
+
+  <section id="panel" hidden>
+    <div class="tabs">
+      <button type="button" data-tab="students" aria-pressed="true">Աշակերտներ</button>
+      <button type="button" data-tab="letters" aria-pressed="false">Նամակներ <span id="lcount"></span></button>
+    </div>
+
+    <div id="tab-students">
+      <form class="card add" id="addForm">
+        <label for="file"><b>Լուսանկար</b></label><br>
+        <input id="file" type="file" accept="image/*" required>
+        <img id="prev" class="prev" alt="" hidden>
+        <label for="descr"><b>Նկարագրություն</b></label>
+        <textarea id="descr" maxlength="1000" required></textarea>
+        <button class="btn btn-solid" type="submit" id="addBtn">Ավելացնել</button>
+        <p class="result" id="addRes" aria-live="polite"></p>
+      </form>
+      <div id="students" style="margin-top:18px"></div>
+    </div>
+
+    <div id="tab-letters" hidden><div id="letters"></div></div>
   </section>
 </main>
 <script src="shared/config.js"></script>
 <script>
 (function () {
   var cfg = window.SCHOOL_CFG || {}, $ = function (s) { return document.querySelector(s); };
+  var PW = '';
+  function rpc(name, body) {
+    return fetch(cfg.supabaseUrl + '/rest/v1/rpc/' + name, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey },
+      body: JSON.stringify(body || {}), referrerPolicy: 'no-referrer', credentials: 'omit'
+    }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function (t) { return t ? JSON.parse(t) : null; });
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  /* login: the server checks the password by loading the letters */
   $('#pwForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var res = $('#pwRes'), btn = $('#pwBtn');
     if (!cfg.supabaseUrl || !cfg.anonKey) { res.className = 'result warn'; res.textContent = 'Backend is not configured.'; return; }
     btn.disabled = true; res.className = 'result'; res.textContent = '…';
-    fetch(cfg.supabaseUrl + '/rest/v1/rpc/get_letters', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey },
-      body: JSON.stringify({ pw: $('#pw').value }), referrerPolicy: 'no-referrer', credentials: 'omit'
-    }).then(function (r) {
-      if (!r.ok) throw new Error('bad');
-      return r.json();
-    }).then(function (rows) {
-      $('#pwForm').hidden = true; $('#list').hidden = false;
-      $('#count').textContent = rows.length + ' ✉';
-      var box = $('#letters'); box.innerHTML = '';
-      rows.forEach(function (l) {
-        var d = document.createElement('div'); d.className = 'card lt';
-        var w = document.createElement('div'); w.className = 'when'; w.textContent = new Date(l.created_at).toLocaleString();
-        var t = document.createElement('div'); t.className = 'txt'; t.textContent = l.body;
-        d.appendChild(w); d.appendChild(t); box.appendChild(d);
+    PW = $('#pw').value;
+    rpc('get_letters', { pw: PW }).then(function (rows) {
+      $('#pwForm').hidden = true; $('#panel').hidden = false;
+      showLetters(rows); loadStudents();
+    }).catch(function () { PW = ''; res.className = 'result warn'; res.textContent = 'Wrong password'; })
+      .then(function () { btn.disabled = false; });
+  });
+
+  /* tabs */
+  document.querySelectorAll('.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.tabs button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      $('#tab-students').hidden = b.dataset.tab !== 'students';
+      $('#tab-letters').hidden = b.dataset.tab !== 'letters';
+    });
+  });
+
+  /* letters */
+  function showLetters(rows) {
+    $('#lcount').textContent = '(' + rows.length + ')';
+    var box = $('#letters'); box.innerHTML = '';
+    rows.forEach(function (l) {
+      var d = el('div', 'card lt');
+      d.appendChild(el('div', 'when', new Date(l.created_at).toLocaleString()));
+      d.appendChild(el('div', 'txt', l.body));
+      box.appendChild(d);
+    });
+  }
+
+  /* students */
+  function loadStudents() {
+    rpc('list_students').then(function (rows) {
+      var box = $('#students'); box.innerHTML = '';
+      rows.forEach(function (s) {
+        var c = el('div', 'card lt srow'), img = el('img'), d = el('div', 'd', s.descr), del = el('button', 'btn-del', '✕');
+        img.src = s.photo; img.alt = '';
+        del.type = 'button';
+        del.addEventListener('click', function () {
+          if (!confirm('Ջնջե՞լ')) return;
+          del.disabled = true;
+          rpc('delete_student', { pw: PW, sid: s.id }).then(loadStudents).catch(function () { del.disabled = false; });
+        });
+        c.appendChild(img); c.appendChild(d); c.appendChild(del); box.appendChild(c);
       });
-    }).catch(function () { res.className = 'result warn'; res.textContent = 'Wrong password'; })
+    }).catch(function () {});
+  }
+
+  /* resize the chosen photo in the browser so it stays small */
+  var dataUrl = '';
+  $('#file').addEventListener('change', function () {
+    var f = this.files[0]; dataUrl = ''; $('#prev').hidden = true;
+    if (!f) return;
+    var img = new Image(), url = URL.createObjectURL(f);
+    img.onload = function () {
+      var max = 900, k = Math.min(1, max / Math.max(img.width, img.height));
+      var c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      var q = 0.85, out = c.toDataURL('image/jpeg', q);
+      while (out.length > 380000 && q > 0.3) { q -= 0.1; out = c.toDataURL('image/jpeg', q); }
+      URL.revokeObjectURL(url);
+      dataUrl = out; $('#prev').src = out; $('#prev').hidden = false;
+    };
+    img.onerror = function () { $('#addRes').className = 'result warn'; $('#addRes').textContent = 'Not an image'; };
+    img.src = url;
+  });
+  $('#addForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var res = $('#addRes'), btn = $('#addBtn');
+    if (!dataUrl) { res.className = 'result warn'; res.textContent = 'Choose a photo'; return; }
+    btn.disabled = true; res.className = 'result'; res.textContent = '…';
+    rpc('add_student', { pw: PW, descr_in: $('#descr').value.trim(), photo_in: dataUrl }).then(function () {
+      res.className = 'result ok'; res.textContent = '✓';
+      $('#addForm').reset(); dataUrl = ''; $('#prev').hidden = true; loadStudents();
+    }).catch(function () { res.className = 'result warn'; res.textContent = 'Error'; })
       .then(function () { btn.disabled = false; });
   });
 })();

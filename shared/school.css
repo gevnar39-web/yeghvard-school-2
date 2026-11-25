@@ -65,3 +65,15 @@ h1{margin:0 0 14px;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;font-weig
 .dots button{width:10px;height:10px;padding:0;border-radius:50%;border:0;background:rgba(255,255,255,.55)}
 .dots button[aria-current=true]{background:#fff;width:24px;border-radius:99px}
 @media(prefers-reduced-motion:reduce){.slides img{transition:opacity .3s}}
+
+/* home */
+.hero-slim{padding:44px 0 56px}
+.center{text-align:center}
+.hero-slim h1{max-width:900px;margin:0 auto 22px;font-size:clamp(1.5rem,3.2vw,2.3rem)}
+.hero-slim .slider{max-width:860px;margin:0 auto;text-align:left}
+.page-sec{min-height:60vh;padding-top:48px}
+.nav a[aria-current=page]{background:var(--grad);color:#fff}
+.stu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.stu{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.stu img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#e8eff4}
+.stu figcaption{padding:14px 16px;white-space:pre-wrap;word-wrap:break-word}

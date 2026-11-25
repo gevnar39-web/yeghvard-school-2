@@ -3,7 +3,7 @@
   'use strict';
   var D = {
     hy: {
-      brand: 'Եղվարդի N 2 դպրոց', n_about: 'Դպրոցի մասին', n_where: 'Որտեղ ենք', n_proj: 'Մեր նախագծերը', n_letter: 'Գաղտնի նամակ',
+      brand: 'Եղվարդի N 2 դպրոց', n_home: 'Գլխավոր', pride_t: 'Մեր հպարտությունը', pride_x: 'Մեր դպրոցի լավագույն աշակերտները և մարդիկ, որոնցով հպարտանում է դպրոցը։', pride_empty: 'Շուտով այստեղ կհայտնվեն մեր լավագույն աշակերտները։', pride_err: 'Չհաջողվեց բեռնել։',  n_about: 'Դպրոցի մասին', n_where: 'Որտեղ ենք', n_proj: 'Մեր նախագծերը', n_letter: 'Գաղտնի նամակ',
       kicker: 'Անձնական էջ · Գևորգ',
       title: 'Եղվարդի Համլետ Թադևոսյանի անվան N 2 հիմնական դպրոց',
       lead: 'Բարի գալուստ։ Սա մեր դպրոցի էջն է, իսկ ներքևում կգտնես իմ ուսումնական նախագծերը՝ աշխարհագրություն, կենսաբանություն և երկրաչափություն։',
@@ -30,7 +30,7 @@
       foot: 'Եղվարդի N 2 հիմնական դպրոց · Անձնական էջ · Գևորգ'
     },
     ru: {
-      brand: 'Школа № 2 г. Егвард', n_about: 'О школе', n_where: 'Где мы', n_proj: 'Проекты', n_letter: 'Тайное письмо',
+      brand: 'Школа № 2 г. Егвард', n_home: 'Главная', pride_t: 'Наша гордость', pride_x: 'Лучшие ученики нашей школы и люди, которыми гордится школа.', pride_empty: 'Скоро здесь появятся лучшие ученики нашей школы.', pride_err: 'Не удалось загрузить.',  n_about: 'О школе', n_where: 'Где мы', n_proj: 'Проекты', n_letter: 'Тайное письмо',
       kicker: 'Личная страница · Геворг',
       title: 'Основная школа № 2 им. Гамлета Тадевосяна, г. Егвард',
       lead: 'Добро пожаловать! Это страница нашей школы, а ниже — мои учебные проекты: география, биология и геометрия.',
@@ -57,7 +57,7 @@
       foot: 'Основная школа № 2 г. Егвард · Личная страница · Геворг'
     },
     en: {
-      brand: 'Yeghvard School No. 2', n_about: 'About', n_where: 'Where we are', n_proj: 'Projects', n_letter: 'Secret letter',
+      brand: 'Yeghvard School No. 2', n_home: 'Home', pride_t: 'Our pride', pride_x: 'The best pupils of our school and the people the school is proud of.', pride_empty: 'Our best pupils will appear here soon.', pride_err: 'Could not load.',  n_about: 'About', n_where: 'Where we are', n_proj: 'Projects', n_letter: 'Secret letter',
       kicker: 'Personal page · Gevorg',
       title: 'Yeghvard Basic School No. 2 named after Hamlet Tadevosyan',
       lead: 'Welcome! This is our school’s page, and below you will find my study projects: geography, biology and geometry.',
@@ -88,13 +88,23 @@
   var lang = 'hy';
   try { var sv = localStorage.getItem('school_lang'); if (D[sv]) lang = sv; } catch (e) {}
   var T = function (k) { return D[lang][k]; };
+  var PAGES = [['about', 'n_about'], ['where', 'n_where'], ['projects', 'n_proj'], ['letter', 'n_letter']];
+  var cur = document.body.getAttribute('data-page') || 'home';
+  var hd = document.getElementById('siteHeader');
+  if (hd) hd.outerHTML = '<header class="top"><a class="brand" href="index.html"><svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path d="M16 4l12 7v2H4v-2zM7 15h4v10H7zm7 0h4v10h-4zm7 0h4v10h-4z" fill="#2e7d5b"/></svg><b data-i18n="brand"></b></a><nav class="nav">' +
+    PAGES.map(function (p) { return '<a href="' + p[0] + '.html" data-i18n="' + p[1] + '"' + (p[0] === cur ? ' aria-current="page"' : '') + '></a>'; }).join('') +
+    '</nav><div class="lang" id="lang"><button data-lang="hy" aria-pressed="true">HY</button><button data-lang="ru" aria-pressed="false">RU</button><button data-lang="en" aria-pressed="false">EN</button></div></header>';
+  var ft = document.getElementById('siteFooter');
+  if (ft) ft.outerHTML = '<footer class="foot"><div class="wrap"><b data-i18n="brand"></b> · <span data-i18n="foot"></span></div></footer>';
 
   function apply() {
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = T(el.getAttribute('data-i18n')); });
     document.querySelectorAll('[data-i18n-ph]').forEach(function (el) { el.placeholder = T(el.getAttribute('data-i18n-ph')); });
     document.querySelectorAll('#lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
-    document.title = T('title');
+    document.dispatchEvent(new CustomEvent('schoollang'));
+    var hit = PAGES.filter(function (p) { return p[0] === cur; })[0];
+    document.title = hit ? T(hit[1]) + ' · ' + T('brand') : T('title');
     document.querySelectorAll('.slides img').forEach(function (im) { im.alt = T('title'); });
   }
   document.querySelectorAll('#lang button').forEach(function (b) {
@@ -121,11 +131,35 @@
     go(0); restart();
   })();
 
+  /* ---- students we are proud of ---- */
+  (function () {
+    var box = document.getElementById('studentsList'); if (!box) return;
+    var c = window.SCHOOL_CFG || {}, rows = null, failed = false;
+    function render() {
+      box.innerHTML = '';
+      if (failed) { box.innerHTML = '<p class="note"></p>'; box.firstChild.textContent = T('pride_err'); return; }
+      if (rows === null) return;
+      if (!rows.length) { box.innerHTML = '<p class="note"></p>'; box.firstChild.textContent = T('pride_empty'); return; }
+      rows.forEach(function (r) {
+        var f = document.createElement('figure'); f.className = 'stu';
+        var im = document.createElement('img'); im.src = r.photo; im.alt = ''; im.loading = 'lazy';
+        var cp = document.createElement('figcaption'); cp.textContent = r.descr;
+        f.appendChild(im); f.appendChild(cp); box.appendChild(f);
+      });
+    }
+    document.addEventListener('schoollang', render);
+    if (!c.supabaseUrl) { rows = []; render(); return; }
+    fetch(c.supabaseUrl + '/rest/v1/rpc/list_students', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: c.anonKey }, body: '{}', credentials: 'omit' })
+      .then(function (r) { if (!r.ok) throw new Error('x'); return r.json(); })
+      .then(function (d) { rows = d; render(); })
+      .catch(function () { failed = true; render(); });
+  })();
+
   /* ---- anonymous letters ---- */
   var cfg = window.SCHOOL_CFG || {};
   var form = $('#letterForm'), txt = $('#letterText'), res = $('#letterRes'), btn = $('#letterBtn');
-  txt.addEventListener('input', function () { $('#letterCount').textContent = txt.value.length + ' / 2000'; });
-  form.addEventListener('submit', function (e) {
+  if (form) txt.addEventListener('input', function () { $('#letterCount').textContent = txt.value.length + ' / 2000'; });
+  if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();
     var body = txt.value.trim();
     if (!body) return;
