@@ -94,6 +94,18 @@
   if (hd) hd.outerHTML = '<header class="top"><a class="brand" href="index.html"><svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path d="M16 4l12 7v2H4v-2zM7 15h4v10H7zm7 0h4v10h-4zm7 0h4v10h-4z" fill="#2e7d5b"/></svg><b data-i18n="brand"></b></a><nav class="nav">' +
     PAGES.map(function (p) { return '<a href="' + p[0] + '.html" data-i18n="' + p[1] + '"' + (p[0] === cur ? ' aria-current="page"' : '') + '></a>'; }).join('') +
     '</nav><div class="lang" id="lang"><button data-lang="hy" aria-pressed="true">HY</button><button data-lang="ru" aria-pressed="false">RU</button><button data-lang="en" aria-pressed="false">EN</button></div></header>';
+  /* two quick clicks on the school name open the admin panel; one click goes home */
+  (function () {
+    var br = document.querySelector('.brand'), t = 0;
+    function dbl() { location.href = 'admin.html'; }
+    if (br) br.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (t) { clearTimeout(t); t = 0; dbl(); return; }
+      t = setTimeout(function () { t = 0; location.href = 'index.html'; }, 330);
+    });
+    var h1 = document.querySelector('h1[data-i18n=title]');
+    if (h1) h1.addEventListener('dblclick', dbl);
+  })();
   var ft = document.getElementById('siteFooter');
   if (ft) ft.outerHTML = '<footer class="foot"><div class="wrap"><b data-i18n="brand"></b> · <span data-i18n="foot"></span></div></footer>';
 
@@ -177,4 +189,8 @@
     }).catch(function () { res.className = 'result warn'; res.textContent = T('let_err'); })
       .then(function () { btn.disabled = false; });
   });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.1 });
+    document.querySelectorAll('.facts li, .proj, .card, .info div, .stu-grid, .sec .sub').forEach(function (el) { el.classList.add('rv'); io.observe(el); });
+  }
 })();
