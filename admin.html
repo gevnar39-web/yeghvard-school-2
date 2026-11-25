@@ -33,7 +33,7 @@
     btn.disabled = true; res.className = 'result'; res.textContent = '…';
     fetch(cfg.supabaseUrl + '/rest/v1/rpc/get_letters', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey },
+      headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey },
       body: JSON.stringify({ pw: $('#pw').value }), referrerPolicy: 'no-referrer', credentials: 'omit'
     }).then(function (r) {
       if (!r.ok) throw new Error('bad');

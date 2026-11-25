@@ -117,7 +117,7 @@
     btn.disabled = true; res.className = 'result'; res.textContent = '…';
     fetch(cfg.supabaseUrl + '/rest/v1/letters', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey, Prefer: 'return=minimal' },
+      headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey, Prefer: 'return=minimal' },
       body: JSON.stringify({ body: body }),
       referrerPolicy: 'no-referrer', credentials: 'omit'
     }).then(function (r) {
