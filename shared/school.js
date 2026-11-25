@@ -8,7 +8,6 @@
       title: 'Եղվարդի Համլետ Թադևոսյանի անվան N 2 հիմնական դպրոց',
       lead: 'Բարի գալուստ։ Սա մեր դպրոցի էջն է, իսկ ներքևում կգտնես իմ ուսումնական նախագծերը՝ աշխարհագրություն, կենսաբանություն և երկրաչափություն։',
       cta1: 'Տեսնել նախագծերը', cta2: 'Գրել գաղտնի նամակ',
-      photo_cap: 'Եղվարդ քաղաքի կենտրոնը (լուսանկար՝ Bertramz, Wikimedia Commons, CC BY-SA 3.0)',
       about_t: 'Մեր դպրոցը',
       about_x: 'Եղվարդի N 2 հիմնական դպրոցը պետական ոչ առևտրային կազմակերպություն է (ՊՈԱԿ), որը գործում է Կոտայքի մարզի Եղվարդ քաղաքում։ Դպրոցը հիմնադրվել է 1962 թվականին, ուսուցումն անցնում է մեկ հերթով, շաբաթական հինգ օր։ Այն ունի համակարգչային և արհեստագործական սենյակներ, լաբորատորիաներ, գրադարաններ և սպորտդահլիճներ։',
       f_year: 'հիմնադրման տարին', f_pupils: 'աշակերտ', f_teachers: 'մանկավարժ', f_rooms: 'դասասենյակ', f_labs: 'լաբորատորիա', f_gyms: 'մարզադահլիճ',
@@ -36,7 +35,6 @@
       title: 'Основная школа № 2 им. Гамлета Тадевосяна, г. Егвард',
       lead: 'Добро пожаловать! Это страница нашей школы, а ниже — мои учебные проекты: география, биология и геометрия.',
       cta1: 'Смотреть проекты', cta2: 'Написать тайное письмо',
-      photo_cap: 'Центр города Егвард (фото: Bertramz, Wikimedia Commons, CC BY-SA 3.0)',
       about_t: 'Наша школа',
       about_x: 'Основная школа № 2 г. Егвард — государственная некоммерческая организация (ГНКО) в городе Егвард Котайкской области. Школа основана в 1962 году, занятия идут в одну смену, пять дней в неделю. В ней есть компьютерные и мастерские, лаборатории, библиотеки и спортивные залы.',
       f_year: 'год основания', f_pupils: 'учеников', f_teachers: 'педагогов', f_rooms: 'классов', f_labs: 'лаборатории', f_gyms: 'спортзала',
@@ -64,7 +62,6 @@
       title: 'Yeghvard Basic School No. 2 named after Hamlet Tadevosyan',
       lead: 'Welcome! This is our school’s page, and below you will find my study projects: geography, biology and geometry.',
       cta1: 'See the projects', cta2: 'Write a secret letter',
-      photo_cap: 'Centre of Yeghvard (photo: Bertramz, Wikimedia Commons, CC BY-SA 3.0)',
       about_t: 'Our school',
       about_x: 'Yeghvard Basic School No. 2 is a state non-commercial organisation in the town of Yeghvard, Kotayk Province. The school was founded in 1962 and works in a single shift, five days a week. It has computer and workshop rooms, laboratories, libraries and gyms.',
       f_year: 'founded', f_pupils: 'pupils', f_teachers: 'teachers', f_rooms: 'classrooms', f_labs: 'laboratories', f_gyms: 'gyms',
@@ -98,12 +95,31 @@
     document.querySelectorAll('[data-i18n-ph]').forEach(function (el) { el.placeholder = T(el.getAttribute('data-i18n-ph')); });
     document.querySelectorAll('#lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
     document.title = T('title');
-    var img = document.querySelector('.photo img'); if (img) img.alt = T('title');
+    document.querySelectorAll('.slides img').forEach(function (im) { im.alt = T('title'); });
   }
   document.querySelectorAll('#lang button').forEach(function (b) {
     b.addEventListener('click', function () { lang = b.dataset.lang; try { localStorage.setItem('school_lang', lang); } catch (e) {} apply(); });
   });
   apply();
+
+  /* ---- photo slider ---- */
+  (function () {
+    var box = document.getElementById('slider'); if (!box) return;
+    var imgs = box.querySelectorAll('.slides img'), dots = box.querySelector('.dots'), i = 0, timer = 0;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    imgs.forEach(function (_, k) { var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', (k + 1) + ' / ' + imgs.length); b.addEventListener('click', function () { go(k); restart(); }); dots.appendChild(b); });
+    function go(n) {
+      i = (n + imgs.length) % imgs.length;
+      imgs.forEach(function (im, k) { im.classList.toggle('on', k === i); });
+      dots.querySelectorAll('button').forEach(function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    }
+    function restart() { clearInterval(timer); if (!reduce) timer = setInterval(function () { go(i + 1); }, 4500); }
+    box.querySelector('.prev').addEventListener('click', function () { go(i - 1); restart(); });
+    box.querySelector('.next').addEventListener('click', function () { go(i + 1); restart(); });
+    box.addEventListener('mouseenter', function () { clearInterval(timer); });
+    box.addEventListener('mouseleave', restart);
+    go(0); restart();
+  })();
 
   /* ---- anonymous letters ---- */
   var cfg = window.SCHOOL_CFG || {};

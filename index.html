@@ -36,10 +36,16 @@
         <a class="btn btn-ghost" href="#letter" data-i18n="cta2"></a>
       </div>
     </div>
-    <figure class="photo">
-      <img src="shared/img/school.jpg" alt="" onerror="this.onerror=null;this.src='shared/img/yeghvard.jpg';document.getElementById('photoCap').hidden=false">
-      <figcaption id="photoCap" hidden data-i18n="photo_cap"></figcaption>
-    </figure>
+    <div class="photo slider" id="slider" role="region" aria-roledescription="carousel">
+      <div class="slides">
+        <img src="shared/img/school1.jpg" alt="" class="on">
+        <img src="shared/img/school2.jpg" alt="">
+        <img src="shared/img/school3.jpg" alt="">
+      </div>
+      <button class="sl-btn prev" type="button" aria-label="Previous">‹</button>
+      <button class="sl-btn next" type="button" aria-label="Next">›</button>
+      <div class="dots"></div>
+    </div>
   </div>
 </section>
 
