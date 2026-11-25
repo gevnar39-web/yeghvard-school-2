@@ -207,3 +207,6 @@ h1{background:linear-gradient(90deg,#fff 0%,#d3efe0 40%,#fff 80%);background-siz
 
 .video-card{padding:12px;max-width:960px}
 .video-card video{display:block;width:100%;border-radius:12px;background:#000}
+
+.btn-quiz{background:var(--amber);color:#2b1c00;box-shadow:0 6px 18px rgba(217,154,43,.4)}
+@media (max-width:900px){.nav{flex-wrap:wrap;overflow:visible}.nav a{padding:6px 10px;font-size:.88rem}}
